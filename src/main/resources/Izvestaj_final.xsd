@@ -1,0 +1,84 @@
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://korenski/soap/izvestaji_model_final"
+           targetNamespace="http://korenski/soap/izvestaji_model_final" elementFormDefault="qualified">
+
+    <xs:element name="izvestajRequest">
+     	<xs:complexType>
+     	
+            <xs:sequence>
+                <xs:element name="Broj_racuna" >
+	                <xs:simpleType>
+	                	<xs:restriction base="xs:string">
+				            <xs:pattern value="\d{3}-\d{13}-\d{2}"/>
+				        </xs:restriction>
+			        </xs:simpleType>
+                </xs:element>
+                <xs:element name="Datum" type="xs:dateTime"/>
+                <xs:element name="Redni_broj_preseka" type="xs:positiveInteger"/>
+            </xs:sequence>
+           
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="izvestajResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Broj_racuna" >
+                	<xs:simpleType>
+	                	<xs:restriction base="xs:string">
+				            <xs:pattern value="\d{3}-\d{13}-\d{2}"/>
+				        </xs:restriction>
+			        </xs:simpleType>
+                </xs:element>
+                <xs:element name="Datum" type="xs:dateTime"/>
+                <xs:element name="Broj_preseka" type="xs:positiveInteger"/>
+                <xs:element name="Prethodno_stanje">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                            <xs:totalDigits value="15"/>
+                            <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Broj_promena_u_korist" type="xs:nonNegativeInteger"/>
+                <xs:element name="Ukupno_u_korist">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                            <xs:minInclusive value="0"/>
+                            <xs:totalDigits value="15"/>
+                            <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Broj_promena_na_teret" type="xs:nonNegativeInteger"/>
+                <xs:element name="Ukupno_na_teret">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                            <xs:minInclusive value="0"/>
+                            <xs:totalDigits value="15"/>
+                            <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Novo_stanje">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                            <xs:minInclusive value="0"/>
+                            <xs:totalDigits value="15"/>
+                            <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Stavke_preseka">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="odgovor" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    
+</xs:schema>
