@@ -158,7 +158,7 @@ public class TestTokenController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> isprobajRest(@Context HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.println("Rest 8080!");
+		System.out.println("Rest 8090!");
 		
 		nesto();
 		
@@ -196,32 +196,32 @@ public class TestTokenController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> PosaljiZahtev(@Context HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.println("SALJEM zahtev!");
+		System.out.println("SALJEM zahtev REST!");
 		
-		String nzp = poslovnaNalogKlijent.posaljiNalog();
-		
-		System.out.println("Stigao odgovor!");
-		
-		System.out.println("Odgovor "+nzp);
-		
+//		String nzp = poslovnaNalogKlijent.posaljiNalog();
+//		
+//		System.out.println("Stigao odgovor REST!");
+//		
+//		System.out.println("Odgovor "+nzp);
+//		
 		return new ResponseEntity<String>( "Sve ok", HttpStatus.OK);
 	}
 	
-	@RequestMapping(
-			value = "/special/posaljiZahtevZaIzvestaj",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> PosaljiZahtevZaIzvestaj(@Context HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		System.out.println("SALJEM zahtev!");
-		
-		String odg = poslovnaIzvestajKlijent.posaljiZahtevZaIzvestaj();
-				
-		System.out.println("Stigao odgovor!");
-		
-		System.out.println("Odgovor "+odg);
-		
-		return new ResponseEntity<String>( "Sve ok", HttpStatus.OK);
-	}
+//	@RequestMapping(
+//			value = "/special/posaljiZahtevZaIzvestaj",
+//			method = RequestMethod.GET,
+//			produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<String> PosaljiZahtevZaIzvestaj(@Context HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		
+//		System.out.println("SALJEM zahtev!");
+//		
+//		String odg = poslovnaIzvestajKlijent.posaljiZahtevZaIzvestaj();
+//				
+//		System.out.println("Stigao odgovor!");
+//		
+//		System.out.println("Odgovor "+odg);
+//		
+//		return new ResponseEntity<String>( "Sve ok", HttpStatus.OK);
+//	}
 	
 }

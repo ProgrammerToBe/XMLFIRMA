@@ -313,3 +313,7 @@ insert into racun values ('4', '123-7184821064803-82', null, '2013-05-07 19:05:0
 insert into zatvaranje_racuna values ('1', '2017-04-30 19:05:00', '123-7184821064803-82', '1');
 
 insert into activity values('1', 'IOP', 'Ipoppop');
+
+insert into registrovana_poslovna values ('1', '8080', '123' );
+insert into registrovana_firma values ('1','Adresa 1', 'Naziv 1',  '1234567890','8080');
+insert into registrovana_firma values ('2', 'Adresa 2', 'Naziv 2', '1234567888','8090');

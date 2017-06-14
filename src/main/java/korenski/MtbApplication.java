@@ -24,8 +24,8 @@ public class MtbApplication extends WebMvcConfigurerAdapter {
 	}
 	
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authorizationInterceptor()).excludePathPatterns("/special/*");
-        registry.addInterceptor(new SpecialInterceptor()).addPathPatterns("/special/*");
+//        registry.addInterceptor(authorizationInterceptor()).excludePathPatterns("/special/*");
+//        registry.addInterceptor(new SpecialInterceptor()).addPathPatterns("/special/*");
     }
     
 	public static void main(String[] args) {

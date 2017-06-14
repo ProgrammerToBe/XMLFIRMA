@@ -6,7 +6,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
 @Configuration
-public class PoslovnaNalogKlijentConfig {
+public class PoslovnaKlijentConfig {
 //	@Bean
 //	  Jaxb2Marshaller jaxb2Marshaller() {
 //

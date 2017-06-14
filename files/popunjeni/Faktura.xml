@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Faktura xmlns="http://ftn.uns.ac.rs/faktura"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://ftn.uns.ac.rs/faktura file:/C:/Users/Korisnik/Desktop/JARS%20app/izgleda_da_nema/Faktura.xsd">
+    <ID_poruke>qweqwe</ID_poruke>
+    <Dobavljac xsi:type="TFirma">
+        <Naziv>Mena consulting</Naziv>
+        <PIB>1234567890</PIB>
+        <Adresa>Nemam pojma 18</Adresa>
+    </Dobavljac>
+    <Kupac xsi:type="TFirma">
+        <Naziv>Prava firma DOO</Naziv>
+        <PIB>0987654321</PIB>
+        <Adresa>Opet nemam pojma 19</Adresa>
+    </Kupac>
+    <Datum_fakture>2017-12-23T03:15:00</Datum_fakture>
+    <Broj_fakture>2011-RN-001</Broj_fakture>
+    <Datum_valute>2017-12-15T03:15:00</Datum_valute>
+    <Oznaka_valute>DIN</Oznaka_valute>
+    <Vrednost_robe>1500.00</Vrednost_robe>
+    <Vrednost_usluga>0.00</Vrednost_usluga>
+    <Ukupno_roba_I_usluge>1500.00</Ukupno_roba_I_usluge>
+    <Ukupan_rabat>123.00</Ukupan_rabat>
+    <Ukupan_porez>321.00</Ukupan_porez>
+    <Iznos_za_uplatu>1200.03</Iznos_za_uplatu>
+    <Uplata_na_racun>123-1234567890123-12</Uplata_na_racun>
+    <Stavke>
+        <Stavka_fakture>
+            <Redni_broj>1</Redni_broj>
+            <Naziv_robe_ili_usluge>FOTOKOPIR PAPIR A4, BELI, STANDARD, 500 LISTOVA</Naziv_robe_ili_usluge>
+            <Kolicina>5000</Kolicina>
+            <Jedinica_mere>500kg</Jedinica_mere>
+            <Jedinicna_cena>20.00</Jedinicna_cena>
+            <Vrednost>2250.00</Vrednost>
+            <Procenat_rabata>10.00</Procenat_rabata>
+            <Iznos_rabata>2.00</Iznos_rabata>
+            <Umanjeno_za_rabat>1230.00</Umanjeno_za_rabat>
+            <Ukupan_porez>343.22</Ukupan_porez>
+        </Stavka_fakture>
+        <Stavka_fakture>
+            <Redni_broj>2</Redni_broj>
+            <Naziv_robe_ili_usluge>NOTEBOOK RACUNAR</Naziv_robe_ili_usluge>
+            <Kolicina>1000</Kolicina>
+            <Jedinica_mere>2kg</Jedinica_mere>
+            <Jedinicna_cena>324.07</Jedinicna_cena>
+            <Vrednost>32407.41</Vrednost>
+            <Procenat_rabata>0.00</Procenat_rabata>
+            <Iznos_rabata>0.00</Iznos_rabata>
+            <Umanjeno_za_rabat>0.00</Umanjeno_za_rabat>
+            <Ukupan_porez>2592.59</Ukupan_porez>
+        </Stavka_fakture>        
+    </Stavke>
+</Faktura>
