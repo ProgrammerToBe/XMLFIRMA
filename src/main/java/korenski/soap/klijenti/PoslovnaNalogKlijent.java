@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
 import korenski.model.xml_pomocni.RegistrovanaPoslovna;
+import korenski.repository.xml_pomocni.RegistrovanaFirmaRepository;
 import korenski.repository.xml_pomocni.RegistrovanaPoslovnaRepository;
 import korenski.soap.nalozi_model.NalogRequest;
 import korenski.soap.nalozi_model.NalogResponse;
