@@ -1,0 +1,119 @@
+<div ng-controller="FaktureCtrl as faktureCtrl" data-ng-init="init()">
+			<div class="row">
+			  		
+			  		<div class="col-sm-8 col-sm-offset-2">
+			  			
+				  		<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Naziv dobavljaca</th>
+									<th>PIB dobavljaca</th>
+									<th>Datum racuna</th>
+									<th>Vrednost robe</th>
+									<th>Vrednost usluge</th>
+									<th>Vrednost rabata</th>
+									<th>Ukupno roba i usluga</th>
+									<th>Ukupan rabat</th>
+									<th>Ukupan porez</th>
+									<th>Iznos za uplatu</th>
+									<th>Uplata na racun</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="faktura in fakture">
+									<td>{{faktura.dobavljac.naziv}}</td>
+									<td>{{faktura.dobavljac.pib}}</td>
+									<td>{{faktura.datumFakture | date : "MM/dd/yyyy 'at' h:mma"}}</td>
+									<td>{{faktura.vrednostUsluga}}</td>
+									<td>{{faktura.vrednostRobe}}</td>
+									<td>{{faktura.ukupnoRobaIUsluga}}</td>
+									<td>{{faktura.ukupanRabat}}</td>
+									<td>{{faktura.ukupanPorez}}</td>
+									<td>{{faktura.iznosZaUplatu}}</td>
+									<td>{{faktura.uplataNaRacun}}</td>
+									<td><input  type="button" class="btn btn-primary" value="Plati" ng-click="faktureCtrl.pokupiPodatke(faktura)" data-toggle="modal" data-target="#kreirajNalog" /></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+			  	</div>
+			  	
+			  <div class="modal fade" id="kreirajNalog" role="dialog">
+    <div class="modal-dialog">
+    
+      
+      <div class="modal-content" >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+       			<div class="row">
+			  		
+			  		<div class="col-sm-5">
+			  			<fieldset class="form-group">
+       					<textarea class="form-control" rows="8" ng-model="fakturaDTO.svrhaPlacanja">
+       					</textarea>	
+					</div>
+			<div class="col-sm-7">
+				<fieldset class="form-group">
+					
+						<input ng-model="fakturaDTO.racunDuznika" type="text" min="1" class="form-control" placeholder="Racun duznika" required></input>
+					
+				</fieldset>				
+				
+				<fieldset class="form-group">
+					<div class="col-sm-4">
+						<input ng-model="fakturaDTO.modelDuznik" type="number" min="1" class="form-control"  required></input>
+					</div>
+					<div class="col-sm-8">
+						<input ng-model="fakturaDTO.pozivNaBrojDuznika" type="text" min="1" class="form-control" required placeholder="Poziv na broj"></input>
+					</div>
+				</fieldset>		
+				
+				<fieldset class="form-group">
+					
+						<input ng-model="fakturaDTO.faktura.uplataNaRacun" type="text" min="1" class="form-control"  required readOnly></input>
+					
+				</fieldset>		
+				<fieldset class="form-group">
+					<div class="col-sm-4">
+						<input ng-model="fakturaDTO.modelPoverioca" type="number" min="1" class="form-control"  required ></input>
+					</div>
+					<div class="col-sm-8">
+						<input ng-model="fakturaDTO.pozivNaBrojPoverioca" type="text" min="1" class="form-control" placeholder="Poziv na broj" required></input>
+					</div>
+				</fieldset>	
+				<div class="row">
+					<div class="col-sm-2 col-sm-offset-10">
+						<!-- fieldset class="form-group">
+							
+						</fieldset>  -->
+						<fieldset class="form-group">
+						<span>
+							<label>Hitno</label>
+							<input type="checkbox" ng-model="fakturaDTO.hitno" required>
+							</span>
+						<fieldset class="form-group">
+					</div>
+				</div>		
+
+			</div>
+			
+		</div>
+			
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="faktureCtrl.plati()">Potvrdi</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="faktureCtrl.odustani()">Odustani</button>
+        </div>
+      </div>
+		
+	</div>
+</div>
+			</div>
+		
+			
+

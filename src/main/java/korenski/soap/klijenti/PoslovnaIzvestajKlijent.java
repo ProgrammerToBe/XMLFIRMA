@@ -11,6 +11,7 @@ import korenski.model.xml_pomocni.RegistrovanaPoslovna;
 import korenski.repository.xml_pomocni.RegistrovanaPoslovnaRepository;
 import korenski.soap.izvestaji_model.IzvestajRequest;
 import korenski.soap.izvestaji_model.IzvestajResponse;
+import korenski.soap.izvestaji_model.Presek;
 import korenski.soap.izvestaji_model.ZahtevZaIzvod;
 import korenski.soap.nalozi_model.ObjectFactory;
 
@@ -22,7 +23,7 @@ public class PoslovnaIzvestajKlijent {
 	@Autowired
 	private RegistrovanaPoslovnaRepository poslovneRepository;
 
-	public String posaljiZahtevZaIzvestaj(ZahtevZaIzvod zahtev) {
+	public Presek posaljiZahtevZaIzvestaj(ZahtevZaIzvod zahtev) {
 
 		
 
@@ -36,7 +37,7 @@ public class PoslovnaIzvestajKlijent {
 		RegistrovanaPoslovna registrovana = poslovneRepository.findRegistrovanaPoslovnaByPrveTri(prveTri);
 
 		if (registrovana == null) {
-			return "Nije registrovana banka!";
+			return null;
 		}
 
 		int port = registrovana.getPort();
@@ -62,10 +63,10 @@ public class PoslovnaIzvestajKlijent {
 		System.out.println("Stigao odgovor!");
 
 		if(odgovor.getPresek()	 == null){
-			return "Odgovor je NULL";
+			return null;
 		}
 		
-		return odgovor.getPresek().getBrojRacuna();
+		return odgovor.getPresek();
 	}
 
 	private Jaxb2Marshaller jaxb2Marshaller(String path) {

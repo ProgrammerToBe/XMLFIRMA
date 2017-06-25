@@ -71,7 +71,7 @@ public class PoslovnaNalogKlijent {
 		
 		System.out.println("Saljem nalog!");
 		
-		String[] parts =  n.getPodaciOPlacanju().getFinansijskiPodaciPoverilac().getBrojRacuna().split("-");
+		String[] parts =  n.getPodaciOPlacanju().getFinansijskiPodaciDuznik().getBrojRacuna().split("-");
 		String prveTri = parts[0];
 		RegistrovanaPoslovna registrovana = poslovneRepository.findRegistrovanaPoslovnaByPrveTri(prveTri);
 		

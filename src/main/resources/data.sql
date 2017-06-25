@@ -308,12 +308,12 @@ insert into klijent values ('adresa', 'mail3@kkk.kkk', TRUE, 'Ime3', '4518545121
 insert into racun values ('1', '123-1726533787929-93', '2017-04-30 19:05:00', '2013-02-15 19:05:00', '0', FALSE, '1', '12');
 insert into racun values ('2', '123-9338670954849-69', NULL, '2013-01-15 19:05:00', '2000', TRUE, '1', '12');
 insert into racun values ('3', '123-8880775775674-13', null, '2013-05-10 19:05:00', '12000', TRUE, '1', '13');
-insert into racun values ('4', '123-7184821064803-82', null, '2013-05-07 19:05:00', '12000', TRUE, '1', '13');
+insert into racun values ('4', '321-7184821064803-82', null, '2013-05-07 19:05:00', '12000', TRUE, '2', '13');
 
 insert into zatvaranje_racuna values ('1', '2017-04-30 19:05:00', '123-7184821064803-82', '1');
 
 insert into activity values('1', 'IOP', 'Ipoppop');
 
-insert into registrovana_poslovna values ('1', '8080', '123' );
+insert into registrovana_poslovna values ('1', '8085', '123' );
 insert into registrovana_firma values ('1','Adresa 1', 'Naziv 1',  '1234567890','8080');
-insert into registrovana_firma values ('2', 'Adresa 2', 'Naziv 2', '1234567888','8090');
+insert into registrovana_firma values ('2', 'Adresa 2', 'Naziv 2', '1234567888','8081');

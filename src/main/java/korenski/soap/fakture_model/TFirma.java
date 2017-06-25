@@ -8,6 +8,11 @@
 
 package korenski.soap.fakture_model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -62,8 +67,14 @@ import javax.xml.bind.annotation.XmlType;
     "pib",
     "adresa"
 })
+@Entity
 public class TFirma {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	
     @XmlElement(name = "Naziv", required = true)
     protected String naziv;
     @XmlElement(name = "PIB", required = true)

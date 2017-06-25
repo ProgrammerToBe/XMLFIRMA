@@ -8,9 +8,15 @@
 
 package korenski.soap.izvestaji_model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -41,15 +47,30 @@ import javax.xml.bind.annotation.XmlType;
     "model",
     "pozivNaBroj"
 })
+@Entity
 public class TFinansijskiPodaci {
-
-    @XmlElement(name = "Broj_racuna", required = true)
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	@XmlTransient
+	private Long id;
+	
+	@XmlElement(name = "Broj_racuna", required = true)
     protected String brojRacuna;
     @XmlElement(name = "Model", required = true)
     protected String model;
     @XmlElement(name = "Poziv_na_broj", required = true)
     protected String pozivNaBroj;
 
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
     /**
      * Gets the value of the brojRacuna property.
      * 

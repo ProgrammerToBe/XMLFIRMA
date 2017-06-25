@@ -10,11 +10,22 @@ package korenski.soap.fakture_model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -149,22 +160,30 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "uplataNaRacun",
     "stavke"
 })
+@Entity
 public class Faktura {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
     @XmlElement(name = "ID_poruke", required = true)
     protected String idPoruke;
     @XmlElement(name = "Dobavljac", required = true)
+    @OneToOne(cascade = CascadeType.ALL)
     protected TFirma dobavljac;
     @XmlElement(name = "Kupac", required = true)
+    @OneToOne(cascade = CascadeType.ALL)
     protected TFirma kupac;
     @XmlElement(name = "Datum_fakture", required = true)
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar datumFakture;
+    protected Date datumFakture;
     @XmlElement(name = "Broj_fakture", required = true)
     protected String brojFakture;
     @XmlElement(name = "Datum_valute", required = true)
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar datumValute;
+    protected Date datumValute;
     @XmlElement(name = "Oznaka_valute", required = true)
     protected String oznakaValute;
     @XmlElement(name = "Vrednost_robe", required = true)
@@ -182,9 +201,22 @@ public class Faktura {
     @XmlElement(name = "Uplata_na_racun", required = true)
     protected String uplataNaRacun;
     @XmlElement(name = "Stavke", required = true)
+    @OneToOne(cascade = CascadeType.ALL)
     protected Faktura.Stavke stavke;
+    @XmlTransient
+    protected boolean tip;
+    @XmlTransient
+    protected boolean zatvorena;
+    
 
-    /**
+    
+    public Faktura() {
+		super();
+		this.zatvorena=false;
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Gets the value of the idPoruke property.
      * 
      * @return
@@ -256,6 +288,8 @@ public class Faktura {
         this.kupac = value;
     }
 
+    
+    
     /**
      * Gets the value of the datumFakture property.
      * 
@@ -264,23 +298,71 @@ public class Faktura {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getDatumFakture() {
-        return datumFakture;
-    }
+//    public XMLGregorianCalendar getDatumFakture() {
+//        return datumFakture;
+//    }
+//
+//    /**
+//     * Sets the value of the datumFakture property.
+//     * 
+//     * @param value
+//     *     allowed object is
+//     *     {@link XMLGregorianCalendar }
+//     *     
+//     */
+//    public void setDatumFakture(XMLGregorianCalendar value) {
+//        this.datumFakture = value;
+//    }
 
-    /**
-     * Sets the value of the datumFakture property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setDatumFakture(XMLGregorianCalendar value) {
-        this.datumFakture = value;
-    }
+    public Long getId() {
+		return id;
+	}
+   
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
+	public boolean isTip() {
+		return tip;
+	}
 
-    /**
+	public void setTip(boolean tip) {
+		this.tip = tip;
+	}
+
+	public boolean isZatvorena() {
+		return zatvorena;
+	}
+
+	public void setZatvorena(boolean zatvorena) {
+		this.zatvorena = zatvorena;
+	}
+
+	public String getIdPoruke() {
+		return idPoruke;
+	}
+
+	public void setIdPoruke(String idPoruke) {
+		this.idPoruke = idPoruke;
+	}
+
+	public Date getDatumFakture() {
+		return datumFakture;
+	}
+
+	public void setDatumFakture(Date datumFakture) {
+		this.datumFakture = datumFakture;
+	}
+
+	public Date getDatumValute() {
+		return datumValute;
+	}
+
+	public void setDatumValute(Date datumValute) {
+		this.datumValute = datumValute;
+	}
+
+	/**
      * Gets the value of the brojFakture property.
      * 
      * @return
@@ -312,21 +394,21 @@ public class Faktura {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getDatumValute() {
-        return datumValute;
-    }
-
-    /**
-     * Sets the value of the datumValute property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setDatumValute(XMLGregorianCalendar value) {
-        this.datumValute = value;
-    }
+//    public XMLGregorianCalendar getDatumValute() {
+//        return datumValute;
+//    }
+//
+//    /**
+//     * Sets the value of the datumValute property.
+//     * 
+//     * @param value
+//     *     allowed object is
+//     *     {@link XMLGregorianCalendar }
+//     *     
+//     */
+//    public void setDatumValute(XMLGregorianCalendar value) {
+//        this.datumValute = value;
+//    }
 
     /**
      * Gets the value of the oznakaValute property.
@@ -568,9 +650,17 @@ public class Faktura {
     @XmlType(name = "", propOrder = {
         "stavkaFakture"
     })
+    @Entity
+    
     public static class Stavke {
 
+    	@Id
+    	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    	@Column(name = "id")
+    	private Long id;
+    	
         @XmlElement(name = "Stavka_fakture", required = true)
+        @OneToMany(cascade = CascadeType.ALL)
         protected List<StavkaFakture> stavkaFakture;
 
         /**

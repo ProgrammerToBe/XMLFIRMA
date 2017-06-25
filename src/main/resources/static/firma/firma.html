@@ -25,6 +25,7 @@
 <script type = "text/javascript" src="../directives/login/cookieModul.js"></script>
 <script type = "text/javascript" src="firma.js"></script>
 <script type = "text/javascript" src="faktura/faktura.js"></script>
+<script type = "text/javascript" src="placanje/fakture.js"></script>
 <script type = "text/javascript" src="izvestaj/izvestaj.js"></script>
 
 <script type = "text/javascript" src="AdminScriptOverall.js"></script>
@@ -63,7 +64,7 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
     <li ng-class="{active: tab === 0}"><a href="#" ng-click="opsti.tabClick(0)"><h4>Home</h4></a></li>
     <li ng-class="{active: tab === 1}"><a href="#" ng-click="opsti.tabClick(1)"><h4>Faktura</h4></a></li>
     <li ng-class="{active: tab === 2}"><a href="#" ng-click="opsti.tabClick(2)"><h4>Izvestaji</h4></a></li>
-    
+    <li ng-class="{active: tab === 3}"><a href="#" ng-click="opsti.tabClick(3)"><h4>Pristigle fakture</h4></a></li>
   </ul>
  <nav>
 <div >
@@ -79,6 +80,11 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
     <div id="izvestaj" class="tab-pane fade in active" ng-show='tab == 2'>
     
       <div ng-include="'izvestaj/izvestaj.html'"></div>
+    </div>
+     
+    <div id="fakture" class="tab-pane fade in active" ng-show='tab == 3'>
+    
+      <div ng-include="'placanje/fakture.html'"></div>
     </div>
 
   </div>

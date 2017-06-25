@@ -10,6 +10,12 @@ package korenski.soap.fakture_model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -123,8 +129,14 @@ import javax.xml.bind.annotation.XmlType;
     "ukupanPorez"
 })
 @XmlRootElement(name = "Stavka_fakture")
+@Entity
 public class StavkaFakture {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	
     @XmlElement(name = "Redni_broj", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger redniBroj;

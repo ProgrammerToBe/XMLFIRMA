@@ -1,6 +1,6 @@
 package korenski.soap.klijenti;
 
-import java.util.Date;
+import java.math.BigInteger;
 import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import korenski.repository.soap.IzvodRepository;
+import korenski.repository.soap.PresekRepository;
+import korenski.soap.izvestaji_model.Presek;
 import korenski.soap.izvestaji_model.ZahtevZaIzvod;
+import korenski.soap.klijenti.dto.IzvodDTO;
 
 @Controller
 public class IzvestajKontroler {
@@ -29,32 +33,40 @@ public class IzvestajKontroler {
 	@Autowired
 	PoslovnaIzvestajKlijent poslovnaIzvestajKlijent;
 	
+	@Autowired
+	IzvodRepository izvodRepository;
+	
+	@Autowired
+	PresekRepository presekRepository;
+	
 	@RequestMapping(
-			value = "/special/posaljiZahtevZaIzvestaj/{datum}",
-			method = RequestMethod.GET,
+			value = "/special/posaljiZahtevZaIzvestaj",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> PosaljiZahtevZaIzvestaj(@PathVariable("datum") Date datum,  @Context HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<Presek> PosaljiZahtevZaIzvestaj(@RequestBody IzvodDTO dto,  @Context HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		System.out.println("SALJEM zahtev za izvestaj!");
 		
 		System.out.println("Pravim zahtev!");
 		
 		ZahtevZaIzvod zahtev = new ZahtevZaIzvod();
-		zahtev.setBrojRacuna("123-7894546-97");
+		zahtev.setBrojRacuna(dto.getBrojRacuna());
 		
-		GregorianCalendar c1 = new GregorianCalendar();
-		c1.setTime(datum);
-		XMLGregorianCalendar datumI = DatatypeFactory.newInstance().newXMLGregorianCalendar(c1);
+		zahtev.setDatum(dto.getDatum());
 		
-		zahtev.setDatum(datumI);
+		zahtev.setRedniBrojPreseka(new BigInteger(dto.getBrojPreseka()));
 		
-		String odg = poslovnaIzvestajKlijent.posaljiZahtevZaIzvestaj(zahtev);
-				
+		Presek odg = poslovnaIzvestajKlijent.posaljiZahtevZaIzvestaj(zahtev);
+			
+		izvodRepository.save(zahtev);
+		presekRepository.save(odg);
+		
 		System.out.println("Stigao odgovor!");
 		
-		System.out.println("Odgovor "+odg);
+		System.out.println("Odgovor "+odg.getBrojPromenaNaTeret());
 		
-		return new ResponseEntity<String>( "Sve ok", HttpStatus.OK);
+		return new ResponseEntity<Presek>( odg, HttpStatus.OK);
 	}
 
 }

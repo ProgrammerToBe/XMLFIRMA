@@ -1,6 +1,9 @@
 package korenski.model.xml_pomocni.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import korenski.model.dto.ArtiklDTO;
 
 public class FakturaDTO {
 	
@@ -21,6 +24,8 @@ public class FakturaDTO {
 	
 	private Date datumFakture;
 	private Date datumValute;
+	
+	private List<ArtiklDTO> artikli;
 	public FakturaDTO(int brojFakture, int pibDobavljaca, int pibKupca, String oznakaValute, double vrednostRobe,
 			double vrednostUsluge, double ukupanRabat, double ukupanPorez, String racunZaUplatu, Date datumFakture,
 			Date datumValute) {
@@ -106,6 +111,12 @@ public class FakturaDTO {
 	}
 	public void setDatumValute(Date datumValute) {
 		this.datumValute = datumValute;
+	}
+	public List<ArtiklDTO> getArtikli() {
+		return artikli;
+	}
+	public void setArtikli(List<ArtiklDTO> artikli) {
+		this.artikli = artikli;
 	}
 	
 	

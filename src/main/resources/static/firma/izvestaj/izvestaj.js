@@ -1,5 +1,8 @@
 administratorFirme.controller('IzvestajCtrl', function($scope, $http, $compile, $timeout, $rootScope, $cookies, $window, tokenService){
 	
+	var control = this;
+	control.izvod = {};
+	
 	$scope.datum = new Date();
 	$scope.izvestaj = {};
 	
@@ -9,7 +12,7 @@ administratorFirme.controller('IzvestajCtrl', function($scope, $http, $compile, 
 	
 	this.submitClick = function(){
 		
-		$http.get('/special/posaljiZahtevZaIzvestaj/'+$scope.datum).
+		$http.post('/special/posaljiZahtevZaIzvestaj', control.izvod).
 	    then(function(response) {
 	    	$scope.izvestaj = response.data;
 	    });

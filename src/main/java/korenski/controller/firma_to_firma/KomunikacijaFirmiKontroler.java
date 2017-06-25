@@ -1,7 +1,10 @@
 package korenski.controller.firma_to_firma;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,11 +27,15 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+import korenski.model.dto.ArtiklDTO;
 import korenski.model.xml_pomocni.RegistrovanaFirma;
 import korenski.model.xml_pomocni.dto.FakturaDTO;
 import korenski.model.xml_pomocni.dto.Odgovor;
+import korenski.repository.soap.FakturaRepository;
 import korenski.repository.xml_pomocni.RegistrovanaFirmaRepository;
 import korenski.soap.fakture_model.Faktura;
+import korenski.soap.fakture_model.Faktura.Stavke;
+import korenski.soap.fakture_model.StavkaFakture;
 import korenski.soap.fakture_model.TFirma;
 import korenski.soap.klijenti.PoslovnaNalogKlijent;
 import korenski.soap.nalozi_model.NalogZaPrenos;
@@ -42,6 +49,9 @@ public class KomunikacijaFirmiKontroler {
 	RegistrovanaFirmaRepository firmaRepository;
 	@Autowired
 	PoslovnaNalogKlijent poslovnaNalogKlijent;
+	
+	@Autowired
+	FakturaRepository fakturaRepository;
 	
 	@RequestMapping(
 			value = "/special/posaljiFakturu",
@@ -67,9 +77,28 @@ public class KomunikacijaFirmiKontroler {
 //		c2.setTime(fakturaDTO.getDatumValute());
 //		XMLGregorianCalendar datumV = DatatypeFactory.newInstance().newXMLGregorianCalendar(c2);
 //		
+		Date d = new Date();
+		faktura.setIDPoruke(d.toString()+fakturaDTO.getPibKupca() + fakturaDTO.getPibDobavljaca());
 		
-		faktura.setDatumFakture(faktura.getDatumFakture());
-		faktura.setDatumValute(faktura.getDatumValute());
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		Date datum = sdf.parse(fakturaDTO.getDatumFakture().toString());
+		Date datumV = sdf.parse(fakturaDTO.getDatumValute().toString());
+		
+		String formattedTimeDatumFakture = output.format(datum);
+		String formattedTimeDatumValute = output.format(datumV);
+		
+		
+//		System.out.println(krajnji);
+		
+		Date datumFakture = sdf.parse(sdf.format(fakturaDTO.getDatumFakture()));
+		Date datumValute = sdf.parse(sdf.format(fakturaDTO.getDatumValute()));
+		
+		
+		faktura.setDatumFakture(datumFakture);
+		faktura.setDatumValute(datumValute);
 		
 		
 		double zaUplatu = fakturaDTO.getVrednostRobe()+fakturaDTO.getVrednostUsluge()-fakturaDTO.getUkupanRabat()-fakturaDTO.getUkupanPorez();
@@ -88,7 +117,7 @@ public class KomunikacijaFirmiKontroler {
 		faktura.setVrednostUsluga(new BigDecimal(fakturaDTO.getVrednostUsluge()));
 		
 		
-		
+	
 		TFirma dobavljac = new TFirma();
 		dobavljac.setAdresa("Moja adresa");
 		dobavljac.setNaziv("Moj naziv");
@@ -108,6 +137,55 @@ public class KomunikacijaFirmiKontroler {
 		faktura.setKupac(kupac);
 		faktura.setDobavljac(dobavljac);
 		
+		StavkaFakture stavka;
+		Stavke stavke = new Stavke();
+		
+		double glavnaGlavnica = 0;
+		double glavniRabat = 0;
+		double glavniPorez = 0;
+		
+		int cnt  = 1;
+		for(ArtiklDTO artikl : fakturaDTO.getArtikli()){
+			stavka = new StavkaFakture();
+			
+			stavka.setJedinicaMere(artikl.getJedinicaMjere());
+			stavka.setJedinicnaCena(new BigDecimal(artikl.getJedinicnaCjena()));
+			stavka.setKolicina(new BigInteger(String.valueOf(artikl.getKolicina())));
+			stavka.setNazivRobeIliUsluge(artikl.getNaziv());
+			stavka.setProcenatRabata(new BigDecimal(artikl.getPopust()));
+			stavka.setRedniBroj(new BigInteger(String.valueOf(cnt)));
+			
+			
+			double ukupanPopust = artikl.getKolicina()*artikl.getJedinicnaCjena()*artikl.getPopust()/100;
+			double ukupanPorez = (artikl.getKolicina()*artikl.getJedinicnaCjena()-ukupanPopust)*artikl.getPdv()/100 ;
+			double glavnica = artikl.getKolicina()*artikl.getJedinicnaCjena();
+			
+			glavniRabat += ukupanPopust;
+			glavniPorez += ukupanPorez;
+			glavnaGlavnica += glavnica;
+			
+			stavka.setUkupanPorez(new BigDecimal(ukupanPorez));
+			
+			stavka.setIznosRabata(new BigDecimal(ukupanPopust));
+			stavka.setUmanjenoZaRabat(new BigDecimal(glavnica-ukupanPopust));
+			
+			stavka.setVrednost(new BigDecimal(glavnica-ukupanPopust+ukupanPorez));
+			
+			
+			stavke.getStavkaFakture().add(stavka);
+			cnt++;
+		}
+		
+		
+		
+		faktura.setStavke(stavke);
+		
+		
+		faktura.setUkupnoRobaIUsluge(new BigDecimal(glavnaGlavnica));
+		faktura.setUkupanRabat(new BigDecimal(glavniRabat));
+		faktura.setUkupanPorez(new BigDecimal(glavniPorez));
+		faktura.setIznosZaUplatu(new BigDecimal(glavnaGlavnica - glavniRabat + glavniPorez));
+		
 		RegistrovanaFirma rf = firmaRepository.findRegistrovanaFirmaByPib(faktura.getKupac().getPIB());
 		
 		if(rf == null){
@@ -118,10 +196,22 @@ public class KomunikacijaFirmiKontroler {
 		
 		String uri = "http://localhost:"+port+"/special/primiFakturu";
 		
+		faktura.setTip(false);
+		
+		faktura.setDatumFakture(fakturaDTO.getDatumFakture());
+		faktura.setDatumValute(fakturaDTO.getDatumValute());
+		
 		Gson gson = new Gson();
 		
 		String jsonInString = gson.toJson(faktura);
 		
+		int indexPocetkaF = jsonInString.indexOf("datumFakture");
+		int indexOnogaStoMiTrebaF = indexPocetkaF+15;
+		
+		String datumFaktureString = jsonInString.substring(indexOnogaStoMiTrebaF, indexOnogaStoMiTrebaF+24);
+		
+		jsonInString.replaceAll(datumFaktureString, formattedTimeDatumFakture);
+		jsonInString.replaceAll(fakturaDTO.getDatumValute().toString(), formattedTimeDatumValute);
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -138,12 +228,13 @@ public class KomunikacijaFirmiKontroler {
 				  System.out.println("Kod poruke je OK");
 				  //Faktura vracenaFaktura = gson.fromJson(vracenaJson.toString(), Faktura.class);
 				  Odgovor vraceniOdgovor = gson.fromJson(vracenaJson.toString(), Odgovor.class);
+				  
 				  return new ResponseEntity<Odgovor>( vraceniOdgovor, HttpStatus.OK);
-				} else  {
+		} else  {
 				  System.out.println("Kod poruke nije OK");
-				}
+		}
 		
-		
+		fakturaRepository.save(faktura);
 		
 		
 		return new ResponseEntity<Odgovor>( new Odgovor(Odgovor.CODE.OK, "Prosledjena faktura" ), HttpStatus.OK);
@@ -160,10 +251,15 @@ public class KomunikacijaFirmiKontroler {
 		
 	    System.out.println("Primljena faktura za"+ faktura.getKupac().getPIB());
 	    System.out.println("Pravim nalog!");
-	    NalogZaPrenos nzp = napraviNalogZaFakturu(faktura);
+//	    NalogZaPrenos nzp = napraviNalogZaFakturu(faktura);
+//		
+//	    
+//	    String odgovor = poslovnaNalogKlijent.posaljiNalog(nzp);
+//	    
+	    faktura.setId(null);
+	    faktura.setTip(true);
+		fakturaRepository.save(faktura);
 		
-	    
-	    String odgovor = poslovnaNalogKlijent.posaljiNalog(nzp);
 	    
 		return new Odgovor(Odgovor.CODE.OK, "Primljena faktura");
 	}
@@ -192,7 +288,7 @@ public class KomunikacijaFirmiKontroler {
 		pop.setDatumNaloga(faktura.getDatumFakture());
 		
 		TFinansijskiPodaci finDuznik = new TFinansijskiPodaci();
-		finDuznik.setBrojRacuna("123-7894546-97");
+		finDuznik.setBrojRacuna("123-1726533787929-93");
 		finDuznik.setModel("97");
 		finDuznik.setPozivNaBroj(faktura.getBrojFakture());
 		
