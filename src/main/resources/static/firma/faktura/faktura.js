@@ -13,10 +13,10 @@ administratorFirme.controller('FakturaCtrl', function($scope, $http, $compile, $
 		$scope.faktura.pibDobavljaca = 1876543567;
 		$scope.faktura.pibKupca = 1234567888;
 		$scope.faktura.oznakaValute = 'DIN';
-		$scope.faktura.vrednostRobe = 1000;
-		$scope.faktura.vrednostUsluge = 200;
-		$scope.faktura.ukupanRabat = 100;
-		$scope.faktura.ukupanPorez = 100;
+		$scope.faktura.vrednostRobe = 0;
+		$scope.faktura.vrednostUsluge = 0;
+		$scope.faktura.ukupanRabat = 0;
+		$scope.faktura.ukupanPorez = 0;
 		$scope.faktura.racunZaUplatu = '234-7184821064803-82';
 		$scope.faktura.datumFakture = new Date();
 		$scope.faktura.datumValute = new Date();

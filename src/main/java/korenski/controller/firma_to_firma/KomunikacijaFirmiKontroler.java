@@ -198,8 +198,8 @@ public class KomunikacijaFirmiKontroler {
 		
 		faktura.setTip(false);
 		
-		faktura.setDatumFakture(fakturaDTO.getDatumFakture());
-		faktura.setDatumValute(fakturaDTO.getDatumValute());
+		faktura.setDatumFakture(null);
+		faktura.setDatumValute(null);
 		
 		Gson gson = new Gson();
 		
@@ -219,7 +219,7 @@ public class KomunikacijaFirmiKontroler {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> entity = new HttpEntity<String>(jsonInString, headers);
-		
+		fakturaRepository.save(faktura);
 		
 		ResponseEntity<String> odgovor = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
 				System.out.println("Dobijen odgovor");
@@ -234,7 +234,7 @@ public class KomunikacijaFirmiKontroler {
 				  System.out.println("Kod poruke nije OK");
 		}
 		
-		fakturaRepository.save(faktura);
+		
 		
 		
 		return new ResponseEntity<Odgovor>( new Odgovor(Odgovor.CODE.OK, "Prosledjena faktura" ), HttpStatus.OK);

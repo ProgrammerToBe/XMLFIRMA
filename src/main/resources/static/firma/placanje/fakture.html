@@ -9,15 +9,15 @@
 									<th>Naziv dobavljaca</th>
 									<th>PIB dobavljaca</th>
 									<th>Datum racuna</th>
-									<th>Vrednost robe</th>
-									<th>Vrednost usluge</th>
-									<th>Vrednost rabata</th>
-									<th>Ukupno roba i usluga</th>
+									
+									<th>Vrednost robe i usluge</th>
+									
+									
 									<th>Ukupan rabat</th>
 									<th>Ukupan porez</th>
 									<th>Iznos za uplatu</th>
 									<th>Uplata na racun</th>
-									
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -25,9 +25,8 @@
 									<td>{{faktura.dobavljac.naziv}}</td>
 									<td>{{faktura.dobavljac.pib}}</td>
 									<td>{{faktura.datumFakture | date : "MM/dd/yyyy 'at' h:mma"}}</td>
-									<td>{{faktura.vrednostUsluga}}</td>
-									<td>{{faktura.vrednostRobe}}</td>
-									<td>{{faktura.ukupnoRobaIUsluga}}</td>
+									
+									<td>{{faktura.ukupnoRobaIUsluge}}</td>
 									<td>{{faktura.ukupanRabat}}</td>
 									<td>{{faktura.ukupanPorez}}</td>
 									<td>{{faktura.iznosZaUplatu}}</td>

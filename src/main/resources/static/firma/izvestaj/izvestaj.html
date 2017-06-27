@@ -10,7 +10,47 @@
 	    	<button type="submit" class="btn btn-default" >Potvrdi</button>
 		</form>
 		
-		{{izvestaj}}
+		<p>Datum : {{izvestaj.datum}}</p>
+		<p>Broj racuna : {{izvestaj.brojRacuna}}</p>
+		<p>Broj preseka : {{izvestaj.brojPreseka}}</p>
+		<p>Broj promena u korist : {{izvestaj.brojPromenaUKorist}}</p>
+		<p>Ukupno u korist : {{izvestaj.ukupnoUKorist}}</p>
+		<p>Broj promena na teret : {{izvestaj.brojPromenaNaTeret}}</p>
+		<p>Ukupno na teret : {{izvestaj.ukupnoNaTeret}}</p>
+		
+		<p>Prethodno stanje : {{izvestaj.prethodnoStanje}}</p>
+		<p>Novo stanje : {{izvestaj.novoStanje}}</p>
+		
+		<p>Stavke preseka:</p>
+		
+		 <table class="table table-hover">
+		        <thead>
+		            <tr class="text">
+		                
+		               
+		                <th><span >RACUN DUZNIKA</span></th>
+		                <th><span >RACUN POVERIOCA</span></th>
+		                <th><span >SVRHA PLACANJA</span></th>
+		                <th><span >IZNOS</span></th>
+		                
+		                
+		            </tr>
+		        </thead>
+		        <tbody>
+			        <tr ng-repeat="p in izvestaj.stavkePreseka.stavkaPreseka track by p.id" >
+			        	
+			        	
+			        	<td>{{p.podaciOPlacanju.finansijskiPodaciDuznik.brojRacuna}}</td>
+			        	<td>{{p.podaciOPlacanju.finansijskiPodaciPoverilac.brojRacuna}}</td>
+			        	<td>{{p.svrhaPlacanja}}</td>
+			        	<td>{{p.podaciOPlacanju.iznos}}</td>
+			        	
+			        </tr>
+		         
+		        </tbody>
+		    </table>
+		
+		
 	</div>
 	<div class="col-sm-4"></div>
 </div>

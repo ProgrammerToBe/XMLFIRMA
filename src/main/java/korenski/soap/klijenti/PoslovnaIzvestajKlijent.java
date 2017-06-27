@@ -37,6 +37,7 @@ public class PoslovnaIzvestajKlijent {
 		RegistrovanaPoslovna registrovana = poslovneRepository.findRegistrovanaPoslovnaByPrveTri(prveTri);
 
 		if (registrovana == null) {
+			System.out.println("NIJE REGISTROVANA========================================");
 			return null;
 		}
 
@@ -56,6 +57,7 @@ public class PoslovnaIzvestajKlijent {
 		try {
 			odgovor = (IzvestajResponse) webServiceTemplate.marshalSendAndReceive(request);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Neuspesno uspostavljanje veze!");
 			return null;
 		}
